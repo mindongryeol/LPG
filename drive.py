@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # first together
 
+# change sleep 0.2 -> 0.15 , 
 import socket
 import nxt
 import sys
@@ -87,13 +88,14 @@ while 1:
                         cntR=0
                         cntL+=1
                         direction.turn(-128,90,False)
-                        sleep(0.2)
+                        sleep(0.15)
                         if cntL>1:
                                 accel.run(-30, False)
                                 direction.turn(127,90,False)
                                 sleep(1)
                                 cntL = 0
                                 direction.turn(-128,90,False)
+                                #sleep(0.5)
                                 
                 # when right color met black line
                 if colorR==1:
@@ -102,7 +104,7 @@ while 1:
                         cntR+=1
                   #  print "5",'colorL',colorL,'colorR',colorR
                         direction.turn(127,90,False)
-                        sleep(0.2)
+                        sleep(0.15)
                         if cntR>1:
                                 print "right backward", 'Color_L:', colorL,'ColorR:', colorR
                         #print "6",'colorL',colorL,'colorR',colorR
@@ -112,43 +114,45 @@ while 1:
                                 sleep(1)
                                 cntR = 0
                                 direction.turn(127,90,False)
+                                #sleep(0.5)
                 # when the car met target1 line
-                if colorL==2 or colorR==2 and data != ':4':
-                        direction.turn(120,90,False)
-                        accel.run(120,False)
-                        sleep(2)
-                        accel.run(0, False)
-                        sleep(1)
-                        accel.run(-60,False)
-                        direction.turn(-120,50,False)
-                        sleep(1.5)
+                if data != ':4':
+                        if colorL==2 or colorR==2:
+                                direction.turn(120,90,False)
+                                accel.run(120,False)
+                                sleep(2)
+                                accel.run(0, False)
+                                sleep(1)
+                                accel.run(-60,False)
+                                direction.turn(-120,50,False)
+                                sleep(1.5)
 
+                                
+                                accel.run(0, False)
+                                lift.run(-5, False)
+                                sleep(1.5)
+                                lift.run(0, False)
+                                sleep(10.5)
+                                lift.run(6, False)
+                                sleep(2)
+                                lift.run(0, False)
+                                sleep(9)
+                                lift.run(-6.9, False)
+                                sleep(1.6)
+                                lift.run(0, False)
+                                lift.idle()
+                                
+                                direction.turn(-120,60,False)
+                                accel.run(40,False)                
+                                while 1:
+                                        colorL=colorleft.get_sample()                        
+                                        if colorL==1 or colorL==4:
+                                                break
+                                
+                                #direction.turn(-100, 60, False)
+                                #accel.run(10, False)
+                                accel.run(30, False)
                         
-                        accel.run(0, False)
-                        lift.run(-5, False)
-                        sleep(1.5)
-                        lift.run(0, False)
-                        sleep(10.5)
-                        lift.run(6, False)
-                        sleep(2)
-                        lift.run(0, False)
-                        sleep(9)
-                        lift.run(-6.9, False)
-                        sleep(1.6)
-                        lift.run(0, False)
-                        lift.idle()
-                        
-                        direction.turn(-120,60,False)
-                        accel.run(40,False)                
-                        while 1:
-                                colorL=colorleft.get_sample()                        
-                                if colorL==1 or colorL==4:
-                                        break
-                        
-                        #direction.turn(-100, 60, False)
-                        #accel.run(10, False)
-                        accel.run(30, False)
-                
                 if colorL==4 or colorR==4:
                                 print 'yellow yellow'
                                 #path dir
@@ -156,7 +160,11 @@ while 1:
                                         print 'data 3'
                                         direction.turn(-128,90,False)
                                 elif data==':4':
+                                        accel.run(-20, False)
+                                        direction.turn(-128,90,False)
+                                        sleep(1)
                                         direction.turn(127,90,False)
+                                        sleep(0.5)
                         
          # 4. Parking System Using turn method.
          # turn( power, tacho_units, brake, timeout, emulate):
