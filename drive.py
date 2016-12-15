@@ -124,7 +124,8 @@ while 1:
                                         colorL=colorleft.get_sample()                        
                                         if colorL==1 or colorL==4:
                                                 break  
-                                accel.run(30, False)             
+                                accel.run(30, False)
+                                
                         elif data == ':4' and yello_flag!=0:
                                 direction.turn(120,90,False)
                                 accel.run(120,False)
