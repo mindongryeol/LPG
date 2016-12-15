@@ -27,13 +27,24 @@ ultra = nxt.Ultrasonic(brick, PORT_4)
 cntL=0
 cntR=0
 sock_flag=1
-port_num =7700
+port_num =7800
 yello_flag=0
-
+blue_flag =0
+green_flag=0
 
 print "Ready"
 
+def getch():
+	fd = sys.stdin.fileno()
+	old_settings = termios.tcgetattr(fd)
+	try:
+		tty.setraw(fd)
+		ch = sys.stdin.read(1)
+	finally:
+		termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+	return ch
 
+ch = ' '
        
                             
              
@@ -41,7 +52,7 @@ print "Ready"
 while 1:
         if sock_flag ==1:
                 HOST = '' #all available interfaces
-                PORT = port_num
+                PORT = 7700
 
                 #1. open Socket
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -85,14 +96,18 @@ while 1:
         while 1:                     
                 colorL=colorleft.get_sample()
                 colorR=colorright.get_sample()
-                print "left forward", 'Color_L:', colorL,'ColorR:', colorR    
+                print "left forward", 'Color_L:', colorL,'ColorR:', colorR
+                ultraval = ultra.get_sample()
                 if ultraval > 15:                        
                         accel.run(30, False)
-                    
+                elif ultraval <= 15:
+                        accel.run(0,False)
+                        continue
                 
                 # when the car met target1 line
                 if colorL==2 or colorR==2:
                         print "blue"
+                        print "blue flag : ",blue_flag
                         if data == ':3' and yello_flag==0:     
                                 direction.turn(120,90,False)
                                 accel.run(120,False)
@@ -124,8 +139,7 @@ while 1:
                                         colorL=colorleft.get_sample()                        
                                         if colorL==1 or colorL==4:
                                                 break  
-                                accel.run(30, False)
-                                
+                                accel.run(30, False)             
                         elif data == ':4' and yello_flag!=0:
                                 direction.turn(120,90,False)
                                 accel.run(120,False)
@@ -160,8 +174,44 @@ while 1:
                                 accel.run(30, False)
                                 direction.turn(-128,90,False)
                                 sleep(2)
+                                
+                        elif data == ':1' and blue_flag==0:
+                                direction.turn(-120,90,False)
+                                accel.run(120,False)
+                                sleep(2)
+                                accel.run(0, False)
+                                sleep(1)
+                                accel.run(-60,False)
+                                direction.turn(120,50,False)
+                                sleep(1.5)
+
+                                
+                                accel.run(0, False)
+                                lift.run(-5, False)
+                                sleep(1.5)
+                                lift.run(0, False)
+                                sleep(10.5)
+                                lift.run(6, False)
+                                sleep(2)
+                                lift.run(0, False)
+                                sleep(9)
+                                lift.run(-6.9, False)
+                                sleep(1.6)
+                                lift.run(0, False)
+                                lift.idle()
+                                
+                                direction.turn(120,60,False)
+                                accel.run(40,False)
+                                while 1:
+                                        colorL=colorleft.get_sample()                        
+                                        if colorL==1 or colorL==4:
+                                                break  
+                                accel.run(30, False)
+                                direction.turn(-127,90,False)
+                                sleep(1) 
                         
-                                 
+                        blue_flag = blue_flag +1
+                          
                 if colorL==4 or colorR==4:
                                 
                         print 'yellow yellow'
@@ -175,16 +225,22 @@ while 1:
                                 sleep(1)
                                 accel.run(30, False)
                                 direction.turn(127,120,False)
-                                sleep(2)
+                                sleep(1.5)
+                        elif data ==':4' and yello_flag!=0:
+                                direction.turn(-128,90,False)
+                        elif data==':1':
+                                direction.turn(127,90,False)
                                         
                         yello_flag = yello_flag+1
 
                 if colorL==3 or colorR==3:
 
-                       if data==':3':
-                               print 'green'
-                               direction.turn(-100,90,False)
-
+                        if data==':3' and green_flag==0:
+                                print 'green'
+                                direction.turn(-100,90,False)
+                        elif data ==':4' and green_flag==0:
+                                direction.turn(-127,90,False)
+                        green_flag=green_flag+1
                 # when left color met black line
                 if colorL==1:
                         cntR=0
@@ -192,7 +248,7 @@ while 1:
                         direction.turn(-128,90,False)
                         sleep(0.15)
                         if cntL>1:
-                                accel.run(-30, False)
+                                accel.run(-20, False)
                                 direction.turn(127,90,False)
                                 sleep(1)
                                 cntL = 0
@@ -217,6 +273,13 @@ while 1:
                                 cntR = 0
                                 direction.turn(127,90,False)
                                 #sleep(0.5)
+
+
+
+
+
+
+                        
                         
          # 4. Parking System Using turn method.
          # turn( power, tacho_units, brake, timeout, emulate):
@@ -241,6 +304,9 @@ while 1:
                         direction.turn(-127,120,False)
                         sleep(1.5)
                         sock_flag=1
+                        yello_flag=0
+                        blue_flag =0
+                        green_flag=0
                         accel.idle()
                         break
 accel.idle()
