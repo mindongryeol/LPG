@@ -63,17 +63,8 @@ while 1:
 
    
                     data = conn.recv(1024)
-                    if not data:
-                        print('hello')
-                        break
-                    if data:
-                        print(data)
-                        if data==':1':
-                            start_flag=data
-                            break;
-                        if data==':2':
-                            start_flag=data
-                            break;
+                    
+                    break;
                     #conn.sendall(data)
     
                     sock_flag=0;
