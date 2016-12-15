@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+# first together
 
 import socket
 import nxt
@@ -30,7 +30,7 @@ port_num =7700
 start_flag=0
 
 print "Ready"
-"""
+
 while 1:
         if sock_flag ==1:
                 HOST = '' #all available interfaces
@@ -73,118 +73,115 @@ while 1:
                 s.close()      
                 
 
-"""
                 
-ultraval = ultra.get_sample()
-while 1:
-
-          
-             
-        colorL=colorleft.get_sample()
-        colorR=colorright.get_sample()
-
-        
-    
-        if ultraval > 15:                        
-                accel.run(30, False)
+        ultraval = ultra.get_sample()
+        while 1:                     
+                colorL=colorleft.get_sample()
+                colorR=colorright.get_sample()
             
-        # when left color met black line
-        if colorL==1:
-                cntR=0
-                cntL+=1
-                direction.turn(-128,90,False)
-                sleep(0.2)
-                if cntL>1:
-                        accel.run(-30, False)
-                        direction.turn(127,90,False)
-                        sleep(1)
-                        cntL = 0
+                if ultraval > 15:                        
+                        accel.run(30, False)
+                    
+                # when left color met black line
+                if colorL==1:
+                        cntR=0
+                        cntL+=1
                         direction.turn(-128,90,False)
-                        
-        # when right color met black line
-        if colorR==1:
-                cntL=0
-                print "left forward", 'Color_L:', colorL,'ColorR:', colorR
-                cntR+=1
-          #  print "5",'colorL',colorL,'colorR',colorR
-                direction.turn(127,90,False)
-                sleep(0.2)
-                if cntR>1:
-                        print "right backward", 'Color_L:', colorL,'ColorR:', colorR
-                #print "6",'colorL',colorL,'colorR',colorR
-                #accel.turn(-128,180,True)
-                        accel.run(-20, False)
-                        direction.turn(-128,90,False)
-                        sleep(1)
-                        cntR = 0
-                        direction.turn(127,90,False)
-        # when the car met target1 line
-        if colorL==2 or colorR==2:
-                direction.turn(120,90,False)
-                accel.run(120,False)
-                sleep(2)
-                accel.run(0, False)
-                sleep(1)
-                accel.run(-60,False)
-                direction.turn(-120,50,False)
-                sleep(1.5)
-
-                
-                accel.run(0, False)
-                lift.run(-5, False)
-                sleep(1.5)
-                lift.run(0, False)
-                sleep(10.5)
-                lift.run(6, False)
-                sleep(2)
-                lift.run(0, False)
-                sleep(9)
-                lift.run(-6.9, False)
-                sleep(1.6)
-                lift.run(0, False)
-                lift.idle()
-                
-                direction.turn(-120,60,False)
-                accel.run(40,False)                
-                while 1:
-                        colorL=colorleft.get_sample()                        
-                        if colorL==1 or colorL==4:
-                                break
-                
-                #direction.turn(-100, 60, False)
-                #accel.run(10, False)
-                accel.run(30, False)
-                if colorL=4 or colorR=4
-                        #path dir
-                        if data==':3':
-                                direction.turn(-128,90,False)
-                        elif data==':4':
+                        sleep(0.2)
+                        if cntL>1:
+                                accel.run(-30, False)
                                 direction.turn(127,90,False)
-                
- # 4. Parking System Using turn method.
- # turn( power, tacho_units, brake, timeout, emulate):
+                                sleep(1)
+                                cntL = 0
+                                direction.turn(-128,90,False)
+                                
+                # when right color met black line
+                if colorR==1:
+                        cntL=0
+                        print "left forward", 'Color_L:', colorL,'ColorR:', colorR
+                        cntR+=1
+                  #  print "5",'colorL',colorL,'colorR',colorR
+                        direction.turn(127,90,False)
+                        sleep(0.2)
+                        if cntR>1:
+                                print "right backward", 'Color_L:', colorL,'ColorR:', colorR
+                        #print "6",'colorL',colorL,'colorR',colorR
+                        #accel.turn(-128,180,True)
+                                accel.run(-20, False)
+                                direction.turn(-128,90,False)
+                                sleep(1)
+                                cntR = 0
+                                direction.turn(127,90,False)
+                # when the car met target1 line
+                if colorL==2 or colorR==2 and data != ':4':
+                        direction.turn(120,90,False)
+                        accel.run(120,False)
+                        sleep(2)
+                        accel.run(0, False)
+                        sleep(1)
+                        accel.run(-60,False)
+                        direction.turn(-120,50,False)
+                        sleep(1.5)
 
-        #parking
-        if colorL==5 or colorR== 5 :
-                direction.turn(-128,90,False)
-                accel.run(-128,False)
-                sleep(3)
-                accel.run(0, False)
-                sleep(1)
-                accel.run(127,False)
-                direction.turn(127,120,False)
-                sleep(3)
-                accel.run(-128,False)
-                direction.turn(-90,60,False)
-                sleep(2)
-                accel.run(-128,False)
-                direction.turn(127,120,False)
-                sleep(2)
-                accel.run(-128,False)
-                direction.turn(-127,120,False)
-                sleep(1.5)
-                sock_flag=1
-                break
+                        
+                        accel.run(0, False)
+                        lift.run(-5, False)
+                        sleep(1.5)
+                        lift.run(0, False)
+                        sleep(10.5)
+                        lift.run(6, False)
+                        sleep(2)
+                        lift.run(0, False)
+                        sleep(9)
+                        lift.run(-6.9, False)
+                        sleep(1.6)
+                        lift.run(0, False)
+                        lift.idle()
+                        
+                        direction.turn(-120,60,False)
+                        accel.run(40,False)                
+                        while 1:
+                                colorL=colorleft.get_sample()                        
+                                if colorL==1 or colorL==4:
+                                        break
+                        
+                        #direction.turn(-100, 60, False)
+                        #accel.run(10, False)
+                        accel.run(30, False)
+                
+                if colorL==4 or colorR==4:
+                                print 'yellow yellow'
+                                #path dir
+                                if data==':3':
+                                        print 'data 3'
+                                        direction.turn(-128,90,False)
+                                elif data==':4':
+                                        direction.turn(127,90,False)
+                        
+         # 4. Parking System Using turn method.
+         # turn( power, tacho_units, brake, timeout, emulate):
+
+                #parking
+                if colorL==5 or colorR== 5 :
+                        direction.turn(-128,90,False)
+                        accel.run(-128,False)
+                        sleep(3)
+                        accel.run(0, False)
+                        sleep(1)
+                        accel.run(127,False)
+                        direction.turn(127,120,False)
+                        sleep(3)
+                        accel.run(-128,False)
+                        direction.turn(-90,60,False)
+                        sleep(2)
+                        accel.run(-128,False)
+                        direction.turn(127,120,False)
+                        sleep(2)
+                        accel.run(-128,False)
+                        direction.turn(-127,120,False)
+                        sleep(1.5)
+                        sock_flag=1
+                        break
 accel.idle()
 print "Finished"
 
