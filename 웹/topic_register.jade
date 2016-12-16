@@ -1,0 +1,79 @@
+extends layout
+
+block content
+    form(name='select_machine'  method='post')
+
+        select.sel(name='Category', onchange='showSub(this.options[this.selectedIndex].value);')
+            option(value='All category' selected) All category
+            option(value='Software') Software
+            option(value='Media Technology') Media Technology
+            option(value='Electronics') Electronics
+            option(value='Mechanical Engineering') Mechanical Engineering
+            option(value='Mathematics') Mathematics
+            option(value='Architecture') Architecture
+        br
+        br
+
+        select.sel2(name='SUB0', style='display:;')
+            option(value='Data & Computer Communication 10th Edition' ) Data & Computer Communication 10th Edition
+            option(value='Head First Java 5.0 Edition') Head First Java 5.0 Edition
+            option(value='Programming C#') Programming C#
+            option(value='Multicore application programming') Multicore application programming
+            option(value='Distributed System') Distributed System
+            option(value='Generative Programming') Generative Programming
+            option(value='Fundamentals of Database Systems') Fundamentals of Database Systems
+            option(value='SanFrancisco Design Patterns' ) SanFrancisco Design Patterns
+            option(value='Multimedia Communications') Multimedia Communications
+            option(value='User Interface Design') User Interface Design
+            option(value='Electronic Devices' ) Electronic Devices
+            option(value='Power Electronics') Power Electronics
+            option(value='Electronic Circuits') Electronic Circuits
+            option(value='Elements of Mechanical Engineering' ) Elements of Mechanical Engineering
+            option(value='Mechanical Engineering Design') Mechanical Engineering Design
+            option(value='Engineering Graphics with AUTOCAD') Engineering Graphics with AUTOCAD
+            option(value='Mathematics Class VII' ) Mathematics Class VII
+            option(value='A Textbook of Applied Mathematics') A Textbook of Applied Mathematics
+            option(value='Mathematics for the JEE Advanced') Mathematics for the JEE Advanced
+            option(value='Modern Architecture Pop-up' ) Modern Architecture Pop-up
+            option(value='Understanding Architecture') Understanding Architecture
+            option(value='DP Architects') DP Architects
+        select.sel2(name='SUB1', style='display:none;')
+            option(value='Data & Computer Communication 10th Edition' selected) Data & Computer Communication 10th Edition
+            option(value='Head First Java 5.0 Edition') Head First Java 5.0 Edition
+            option(value='Programming C#') Programming C#
+            option(value='Multicore application programming') Multicore application programming
+            option(value='Distributed System') Distributed System
+            option(value='Generative Programming') Generative Programming
+            option(value='Fundamentals of Database Systems') Fundamentals of Database Systems
+        select.sel2(name='SUB2', style='display: none;')
+            option(value='SanFrancisco Design Patterns' selected) SanFrancisco Design Patterns
+            option(value='Multimedia Communications') Multimedia Communications
+            option(value='User Interface Design') User Interface Design
+        select.sel2(name='SUB3', style='display: none;')
+            option(value='Electronic Devices' selected) Electronic Devices
+            option(value='Power Electronics') Power Electronics
+            option(value='Electronic Circuits') Electronic Circuits
+        select(name='SUB4', style='display: none;')
+            option(value='Elements of Mechanical Engineering' selected) Elements of Mechanical Engineering
+            option(value='Mechanical Engineering Design') Mechanical Engineering Design
+            option(value='Engineering Graphics with AUTOCAD') Engineering Graphics with AUTOCAD
+        select.sel2(name='SUB5', style='display: none;')
+            option(value='Mathematics Class VII' selected) Mathematics Class VII
+            option(value='A Textbook of Applied Mathematics') A Textbook of Applied Mathematics
+            option(value='Mathematics for the JEE Advanced') Mathematics for the JEE Advanced
+        select.sel2(name='SUB6', style='display: none;')
+            option(value='Modern Architecture Pop-up' selected) Modern Architecture Pop-up
+            option(value='Understanding Architecture') Understanding Architecture
+            option(value='DP Architects') DP Architects
+        br
+        br
+        p Min_pirce :　　
+            input#id(name='Mp')
+        br
+        p Buy it now price :　　
+            input#password(name='Binp')
+        br
+        p Description : 　　
+            input#email(name='Des')
+            input.sel3(type='submit', value='Sign up')
+
